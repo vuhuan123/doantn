@@ -9,9 +9,9 @@ import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/s
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-  <CssVarsProvider theme={theme}>
+    <CssVarsProvider theme={theme}>
       <CssBaseline />
       <App />
-  </CssVarsProvider>
+    </CssVarsProvider>
   </StrictMode>,
 )
