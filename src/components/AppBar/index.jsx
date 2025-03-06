@@ -25,6 +25,8 @@ function AppBar() {
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
+      gap: 2,
+      overflowX: 'auto',
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <AppsIcon sx={{ color: 'primary.main', marginLeft: '12px' }} />
@@ -32,26 +34,29 @@ function AppBar() {
           <SvgIcon
             component={trelloIcon}
             inheritViewBox
-            sx={{ color: 'primary.main' }} />
+            sx={{ color: 'primary.main' }}
+          />
           <Typography variant="h6" component="div" sx={{ color: 'primary.main', gap: 1 }}>
             Trello </Typography>
+          <Box sx={{ display: {xs:' none', md: 'flex'}, gap: 1 }}>
           <Worksprace />
           <Recent />
           <Starred />
           <Templates />
           <Button variant="outlined">Create</Button>
+          </Box>
         </Box>
       </Box>
       {/* p2 */}
-      <Box  sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <TextField id="outlined-basic" label="Search.." type="search" variant="outlined" size= "small" />
+      <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, marginRight: '12px' }}>
+        <TextField id="outlined-basic" label="Search.." type="search" variant="outlined" size="small" sx={{minWidth: '80px'}} />
         <Tooltip title="Notifications">
-        <Badge color="secondary" variant="dot" >
-          <NotificationsNoneIcon />
-        </Badge>
+          <Badge color="secondary" variant="dot" >
+            <NotificationsNoneIcon sx={{ color: 'primary.main' }} />
+          </Badge>
         </Tooltip>
         <Tooltip title="Help">
-        <HelpOutlineIcon />
+          <HelpOutlineIcon sx={{ color: 'primary.main' }} />
         </Tooltip>
         <Modeselect />
         <Profile />
