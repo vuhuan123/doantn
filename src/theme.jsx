@@ -23,7 +23,50 @@ const theme = extendTheme({
       },
     },
   },
-  // ...other properties
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: {
+        body: {
+          '*::-webkit-scrollbar': {
+            width: '8px',
+            height: '8px',
+          },
+          '*::-webkit-scrollbar-thumb': {
+            backgroundColor: '#bdc3c7',
+            boderRadius: '8px',
+          },
+        },
+      },
+    },
+    MuiButton: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          textTransform: 'none',
+        },
+      },
+    },
+    MuiInputLabel: {
+      styleOverrides: {
+        // Name of the slot
+        root:({theme})  => ({
+          color: theme.palette.primary.main,
+          fontSize: '0.875rem',
+        }),
+      },
+    },
+    
+    MuiOutlinedInput: {
+      styleOverrides: {
+        root: ({ theme }) => {
+          return {
+            color: theme.palette.primary.main,
+            fontSize: '0.875rem',
+          }
+        },
+      },
+    },
+  },
 });
 
 export default theme;
