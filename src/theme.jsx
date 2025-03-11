@@ -1,5 +1,5 @@
 
-import { cyan, deepOrange, orange, teal } from '@mui/material/colors';
+// import { cyan, deepOrange, orange, teal } from '@mui/material/colors';
 import { experimental_extendTheme as extendTheme } from '@mui/material/styles';
 
 
@@ -10,18 +10,18 @@ const theme = extendTheme({
     boardBarHeigh: '58px',
   },
   colorSchemes: {
-    light: {
-      palette: {
-        primary: teal,
-        secondary: deepOrange,
-      },
-    },
-    dark: {
-      palette: {
-        primary: cyan,
-        secondary: orange,
-      },
-    },
+    // light: {
+    //   palette: {
+    //     primary: teal,
+    //     secondary: deepOrange,
+    //   },
+    // },
+    // dark: {
+    //   palette: {
+    //     primary: cyan,
+    //     secondary: orange,
+    //   },
+    // },
   },
   components: {
     MuiCssBaseline: {
@@ -29,11 +29,15 @@ const theme = extendTheme({
         body: {
           '*::-webkit-scrollbar': {
             width: '8px',
-            height: '8px',
+            height: '6px',
           },
           '*::-webkit-scrollbar-thumb': {
-            backgroundColor: '#bdc3c7',
-            boderRadius: '8px',
+            backgroundColor: '#dcdde1',
+            borderRadius: '9px',
+          },
+          '*::-webkit-scrollbar-thumb:hover': {
+            backgroundColor: '#00b894',
+        
           },
         },
       },
@@ -58,12 +62,18 @@ const theme = extendTheme({
     
     MuiOutlinedInput: {
       styleOverrides: {
-        root: ({ theme }) => {
-          return {
-            color: theme.palette.primary.main,
-            fontSize: '0.875rem',
-          }
-        },
+        root: {
+          fontSize: '0.875rem',
+          '& fieldset': {
+            borderWidth: '0.5px !important',
+          },
+          '&:hover fieldset': {
+            borderWidth: '1px !important',
+          },
+          '&.Mui-focused fieldset': {
+            borderWidth: '1px !important',
+          },
+        }
       },
     },
   },

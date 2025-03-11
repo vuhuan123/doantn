@@ -12,24 +12,31 @@ import Button from '@mui/material/Button';
 
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 const MERN_STYLES = {
-    color: 'primary.main',
-    backgroundColor: 'rgb(235, 236, 240)',
-    border: 'none',
-    paddingX: 2,
+    color: 'white',
+    backgroundColor: 'transparent',
+    border: '0.5px solid white',
+    paddingX: '5px',
+    '.MuiSvgIcon-root': {
+        color: 'white',
+    }
 }
 
 
 function BoardBar() {
     return (
         <Box sx={{
+          
             width: '100%',
             height: (theme) => theme.trello.boardBarHeigh,
             display: 'flex',
             paddingX: 2,
             alignItems: 'center',
             borderTop: '1px solid rgb(140, 141, 143)',
+            borderBottom: '1px solid rgb(221, 222, 224)',
             justifyContent: 'space-between',
             gap: 2,
+            bgcolor: (theme) => theme.palette.mode === 'dark' ? '#34495e' : '#1976d2',
+              overflowX: 'auto'
         }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Chip icon={<DashboardIcon />} label="Pham Vu" clickable
@@ -53,10 +60,21 @@ function BoardBar() {
 
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Button variant="outlined" startIcon={<PersonAddAltIcon />}> Invite</Button>
+            <Button variant="outlined" startIcon={<PersonAddAltIcon />} 
+            sx={{
+                color: 'white',
+                borderColor: 'white',
+                '&:hover': {
+                    borderColor: 'white',
+                }
+            }}
+            >
+             Invite
+             </Button>
                 <AvatarGroup 
                 max={4}
                 sx={{
+                    gap: '5px',
                     '& .MuiAvatar-root': {
                         width: 30,
                         height: 30,

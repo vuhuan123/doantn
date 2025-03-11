@@ -24,7 +24,15 @@ function Modeselect() {
     return (
       <div>
         <FormControl size='small'>
-          <InputLabel id="lable-select-dark-light-modemode">Mode</InputLabel>
+          <InputLabel id="lable-select-dark-light-modemode"
+            sx={{ 
+              color: 'white',
+              '&.Mui-focused': {
+                color: 'white',
+              },
+             }}>
+          Mode
+          </InputLabel>
           <Select
             labelId="lable-select-dark-light-modemode"
             id="demo-simple-select-autowidth"
@@ -32,6 +40,14 @@ function Modeselect() {
             onChange={handleChange}
             autoWidth
             label="Mode"
+            sx={{ 
+              color: 'white',
+              '.MuiOutlinedInput-notchedOutline': {borderColor: 'white'},
+              '&:hover .MuiOutlinedInput-notchedOutline': {borderColor: 'white'},
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {borderColor: 'white'},
+              '.MuiSvgIcon-root': {color: 'white'},
+              
+            }}
           >
             <MenuItem value="light">
               <Box sx={{ display: 'flex', alignItems: "center", gap: 1 }}>
