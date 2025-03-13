@@ -36,7 +36,10 @@ function BoardBar() {
             justifyContent: 'space-between',
             gap: 2,
             bgcolor: (theme) => theme.palette.mode === 'dark' ? '#34495e' : '#1976d2',
-              overflowX: 'auto'
+            overflowX: 'auto',
+      '&::-webkit-scrollbar-track': {m: 1} 
+
+              
         }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Chip icon={<DashboardIcon />} label="Pham Vu" clickable
@@ -75,10 +78,14 @@ function BoardBar() {
                 max={4}
                 sx={{
                     gap: '5px',
+                    cursor: 'pointer',
                     '& .MuiAvatar-root': {
                         width: 30,
                         height: 30,
                         fontSize: 16,
+                        border: 'none',
+                        color: 'white',
+                        '&:fist-of-type': {bgcolor: '#a4b0be'},
                     }
                 }} 
                 >

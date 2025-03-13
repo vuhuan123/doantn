@@ -13,7 +13,7 @@ import Cloud from '@mui/icons-material/Cloud';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 function Workspace() {
-    const [anchorEl, setAnchorEl] = useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
@@ -25,7 +25,7 @@ function Workspace() {
   return (
     <div>
       <Button
-        sx={{color: 'white'}}
+        sx={{ color: 'white' }}
         id="basic-button-workspace"
         aria-controls={open ? 'basic-menu-workspace' : undefined}
         aria-haspopup="true"
@@ -44,7 +44,7 @@ function Workspace() {
           'aria-labelledby': 'basic-button-workspace"',
         }}
       >
-           <MenuItem>
+        <MenuItem>
           <ListItemIcon>
             <ContentCut fontSize="small" />
           </ListItemIcon>
