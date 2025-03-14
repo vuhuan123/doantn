@@ -25,21 +25,21 @@ const MERN_STYLES = {
 function BoardBar() {
     return (
         <Box sx={{
-          
+
             width: '100%',
             height: (theme) => theme.trello.boardBarHeigh,
             display: 'flex',
             paddingX: 2,
             alignItems: 'center',
             borderTop: '1px solid rgb(140, 141, 143)',
-            borderBottom: '1px solid rgb(221, 222, 224)',
+          
             justifyContent: 'space-between',
             gap: 2,
             bgcolor: (theme) => theme.palette.mode === 'dark' ? '#34495e' : '#1976d2',
             overflowX: 'auto',
-      '&::-webkit-scrollbar-track': {m: 1} 
+            '&::-webkit-scrollbar-track': { m: 1 }
 
-              
+
         }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
                 <Chip icon={<DashboardIcon />} label="Pham Vu" clickable
@@ -63,34 +63,34 @@ function BoardBar() {
 
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-            <Button variant="outlined" startIcon={<PersonAddAltIcon />} 
-            sx={{
-                color: 'white',
-                borderColor: 'white',
-                '&:hover': {
-                    borderColor: 'white',
-                }
-            }}
-            >
-             Invite
-             </Button>
-                <AvatarGroup 
-                max={4}
-                sx={{
-                    gap: '5px',
-                    cursor: 'pointer',
-                    '& .MuiAvatar-root': {
-                        width: 30,
-                        height: 30,
-                        fontSize: 16,
-                        border: 'none',
+                <Button variant="outlined" startIcon={<PersonAddAltIcon />}
+                    sx={{
                         color: 'white',
-                        '&:fist-of-type': {bgcolor: '#a4b0be'},
-                    }
-                }} 
+                        borderColor: 'white',
+                        '&:hover': {
+                            borderColor: 'white',
+                        }
+                    }}
+                >
+                    Invite
+                </Button>
+                <AvatarGroup
+                    max={4}
+                    sx={{
+                        gap: '5px',
+                        cursor: 'pointer',
+                        '& .MuiAvatar-root': {
+                            width: 30,
+                            height: 30,
+                            fontSize: 16,
+                            border: 'none',
+                            color: 'white',
+                            '&:fist-of-type': { bgcolor: '#a4b0be' },
+                        }
+                    }}
                 >
                     <Tolltip title="Pham Vu 001" >
-                        <Avatar alt="Pham Vu 003" src="https://yt3.ggpht.com/ytc/AIdro_nD1ahyug_Kad8D7hSWEsXnc-avy7exMe-Dampww9N_SCuZ_sO-UdbFttBsvdxNXLLbkg=s88-c-k-c0x00ffffff-no-rj"/>
+                        <Avatar alt="Pham Vu 003" src="https://yt3.ggpht.com/ytc/AIdro_nD1ahyug_Kad8D7hSWEsXnc-avy7exMe-Dampww9N_SCuZ_sO-UdbFttBsvdxNXLLbkg=s88-c-k-c0x00ffffff-no-rj" />
                     </Tolltip>
                     <Tolltip title="Pham Vu 002" >
                         <Avatar alt="Bham Vu 003" src="/static/images/avatar/1.jpg" />

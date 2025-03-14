@@ -11,7 +11,7 @@ import LightModeIcon from '@mui/icons-material/LightMode';
 import DarkModeIcon from '@mui/icons-material/DarkMode';
 import SettingsBrightnessIcon from '@mui/icons-material/SettingsBrightness';
 
-function Modeselect() {
+function ModeSelect() {
     const { mode, setMode } = useColorScheme();
   
     const handleChange = (event) => {
@@ -71,4 +71,4 @@ function Modeselect() {
     );
   }
 
-  export default Modeselect;
+  export default ModeSelect;

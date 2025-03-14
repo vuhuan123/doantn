@@ -1,5 +1,5 @@
 import { Box, Typography } from "@mui/material";
-import Modeselect from "../ModeSelect";
+import ModeSelect from "../ModeSelect/ModeSelect";
 import AppsIcon from '@mui/icons-material/Apps';
 import SvgIcon from '@mui/material/SvgIcon';
 import { ReactComponent as trelloIcon } from '~/assets/trello.svg';
@@ -106,7 +106,7 @@ function AppBar() {
         <Tooltip title="Help">
           <HelpOutlineIcon sx={{ color: 'white' }} />
         </Tooltip>
-        <Modeselect />
+        <ModeSelect />
         <Profile />
       </Box>
 
