@@ -9,6 +9,8 @@ import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Tolltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
+import {capitallizeFirstLetter} from '~/utils/fomater'
+
 
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 const MERN_STYLES = {
@@ -22,7 +24,7 @@ const MERN_STYLES = {
 }
 
 
-function BoardBar() {
+function BoardBar({ board }) {
     return (
         <Box sx={{
 
@@ -42,11 +44,11 @@ function BoardBar() {
 
         }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Chip icon={<DashboardIcon />} label="Pham Vu" clickable
+                <Chip icon={<DashboardIcon />} label={board?.title} clickable
                     sx={MERN_STYLES}
 
                 />
-                <Chip icon={<VpnLockIcon />} label="Public/Private Workspace" clickable
+                <Chip icon={<VpnLockIcon />} label={ capitallizeFirstLetter( board?.type)} clickable
                     sx={MERN_STYLES}
 
                 />
