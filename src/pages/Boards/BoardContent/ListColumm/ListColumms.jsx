@@ -1,8 +1,8 @@
 import { Box, Tooltip, Button } from "@mui/material";
-import Columm from "./Columm/Columm";
+import Column from "./Columm/Column";
 import NoteAddIcon from '@mui/icons-material/NoteAdd';
 
-function ListColumms() {
+function ListColumms({columns}) {
    
     return (
 
@@ -17,9 +17,9 @@ function ListColumms() {
             '&::-webkit-scrollbar-track': { m: 2 }
         }}>
 
-            {/* Box Columm 1*/}
-           <Columm />
-           <Columm />
+            {/* Box Columm */}
+            {columns?.map((column)=>  <Column key={column._id} column={column} />)}
+
             <Box sx={{
                   minWidth: '200px',
                   maxWidth: '200px',
