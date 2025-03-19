@@ -16,8 +16,9 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { DragHandle } from "@mui/icons-material";
 import ListCards from "./ListCards/ListCards";
 import { mapOrder } from "~/utils/sort";
-
-function Column({column}) {
+import { useSortable } from '@dnd-kit/sortable';
+import { CSS } from '@dnd-kit/utilities';
+function Column({ column }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
     const handleClick = (event) => {
@@ -27,10 +28,24 @@ function Column({column}) {
         setAnchorEl(null);
     };
 
-    const orderedCards = mapOrder(column?.cards, column?.cardOrderIds,'_id')
+    const { attributes, listeners, setNodeRef, transform, transition, } = useSortable({
+        id: column._id,
+        data: { ...column }
+    });
+    const dndKitColumnStyles = {
+        touchAction: 'none',
+        transform: CSS.Translate.toString(transform),
+        transition,
+    };
+    const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
     return (
 
-        <Box sx={{
+        <Box 
+        ref ={setNodeRef} 
+        style = {dndKitColumnStyles}
+        {...attributes}
+        {...listeners}
+        sx={{
             minWidth: '300px',
             maxWidth: '300px',
             bgcolor: (theme) => theme.palette.mode === 'dark' ? '#333643' : '#ebecf0',
@@ -42,7 +57,7 @@ function Column({column}) {
         }} >
             {/* Box columm header */}
             <Box sx={{
-                height: (theme) => theme.trello.ColummHeaderHeigh ,
+                height: (theme) => theme.trello.ColummHeaderHeigh,
                 p: 2,
                 display: 'flex',
                 alignItems: 'center',
@@ -56,7 +71,7 @@ function Column({column}) {
                         cursor: 'pointer',
                     }}
                 >
-                  { column.title}
+                    {column.title}
                 </Typography>
                 {/* drop down */}
                 <Box>
@@ -116,7 +131,7 @@ function Column({column}) {
                 </Box>
             </Box>
             {/* Box list card */}
-         <ListCards cards ={orderedCards} />
+            <ListCards cards={orderedCards} />
             {/* Box columm footer */}
 
             <Box sx={{
