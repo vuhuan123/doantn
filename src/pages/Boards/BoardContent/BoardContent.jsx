@@ -85,9 +85,7 @@ function BoardContent({ board }) {
 
             return nextColumns
         })
-
     }
-
     //khi bat dau keo 1 phan tu(drag)
     const handleDragStart = (event) => {
         // console.log('handle Start:',  event);
