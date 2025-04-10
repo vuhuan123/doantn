@@ -1,4 +1,4 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Input, Typography } from "@mui/material";
 import ModeSelect from "../ModeSelect/ModeSelect";
 import AppsIcon from '@mui/icons-material/Apps';
 import SvgIcon from '@mui/material/SvgIcon';
@@ -18,6 +18,7 @@ import AddIcon from '@mui/icons-material/Add';
 import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from "react";
+import { InputAdornment } from "@mui/material";
 
 function AppBar() {
   const [searchValue, setSearchValue] = useState('')
@@ -36,7 +37,7 @@ function AppBar() {
       gap: 2,
       overflowX: 'auto',
       bgcolor: (theme) => theme.palette.mode === 'dark' ? '#2c3e50' : '#1565c0',
-      '&::-webkit-scrollbar-track': {m: 1} 
+      '&::-webkit-scrollbar-track': { m: 1 }
     }}>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <AppsIcon sx={{ color: 'white', marginLeft: '12px' }} />
@@ -74,16 +75,20 @@ function AppBar() {
           onChange={(e) => setSearchValue(e.target.value)}
           InputProps={{
             startAdornment: (
-              <SearchIcon sx={{ color: 'white' }} />
+              <InputAdornment position="start">
+                <SearchIcon sx={{ color: 'white' }} />
+              </InputAdornment>
             ),
             endAdornment: (
-              <CloseIcon
-                sx={{
-                  color: searchValue ? 'white' : 'transparent',
-                  fontSize: 'medium', cursor: 'pointer'
-                }}
-                onClick={() => setSearchValue('')}
-              />
+              <InputAdornment position="end">
+                <CloseIcon
+                  sx={{
+                    color: searchValue ? 'white' : 'transparent',
+                    fontSize: 'medium', cursor: 'pointer'
+                  }}
+                  onClick={() => setSearchValue('')}
+                />
+              </InputAdornment>
             )
           }}
           sx={{

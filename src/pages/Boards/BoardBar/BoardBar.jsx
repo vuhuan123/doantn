@@ -9,7 +9,7 @@ import Avatar from '@mui/material/Avatar';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Tolltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
-import {capitallizeFirstLetter} from '~/utils/fomater'
+import { capitallizeFirstLetter } from '~/utils/fomater'
 
 
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
@@ -34,7 +34,7 @@ function BoardBar({ board }) {
             paddingX: 2,
             alignItems: 'center',
             borderTop: '1px solid rgb(140, 141, 143)',
-          
+
             justifyContent: 'space-between',
             gap: 2,
             bgcolor: (theme) => theme.palette.mode === 'dark' ? '#34495e' : '#1976d2',
@@ -44,11 +44,12 @@ function BoardBar({ board }) {
 
         }}>
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Chip icon={<DashboardIcon />} label={board?.title} clickable
-                    sx={MERN_STYLES}
-
-                />
-                <Chip icon={<VpnLockIcon />} label={ capitallizeFirstLetter( board?.type)} clickable
+                <Tolltip title={board?.title}>
+                    <Chip icon={<DashboardIcon />} label={board?.title} clickable
+                         sx={MERN_STYLES}
+                    />
+                </Tolltip>
+                <Chip icon={<VpnLockIcon />} label={capitallizeFirstLetter(board?.type)} clickable
                     sx={MERN_STYLES}
 
                 />
