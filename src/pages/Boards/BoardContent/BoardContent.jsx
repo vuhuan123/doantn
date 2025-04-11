@@ -1,7 +1,16 @@
 import { Box, Tooltip, Typography } from "@mui/material";
 import ListColumms from "./ListColumm/ListColumms";
 import { mapOrder } from "~/utils/sort";
-import { DndContext, DragOverlay, PointerSensor, useSensor, useSensors, MouseSensor, TouchSensor, defaultDropAnimationSideEffects, closestCorners } from "@dnd-kit/core";
+import { DndContext, 
+    DragOverlay, 
+    useSensor,
+    useSensors, 
+    // MouseSensor, 
+    // TouchSensor, 
+    defaultDropAnimationSideEffects, 
+    closestCorners 
+} from "@dnd-kit/core";
+import {MouseSensor, TouchSensor} from '~/customLibarary/DndkitSensor'
 import { useEffect, useState } from "react";
 import { arrayMove } from "@dnd-kit/sortable";
 import Column from "./ListColumm/Columm/Column";
