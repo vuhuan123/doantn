@@ -20,7 +20,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import TextField from '@mui/material/TextField';
 import CloseIcon from '@mui/icons-material/Close';
-import theme from "../../../../../theme";
+
 function Column({ column }) {
     const [anchorEl, setAnchorEl] = useState(null);
     const [openNewCardForm, setOpenNewCardForm] = useState(false)
@@ -171,7 +171,7 @@ function Column({ column }) {
                             alignItems: 'center',
                             justifyContent: 'space-between',
                         }}>
-                            <Button startIcon={<AddCardIcon />} onClick={toggleNewCardForm}> Add new card</Button>
+                            <Button startIcon={<AddCardIcon />}   onClick={toggleNewCardForm}> Add new card</Button>
                             <Tooltip title="Drag to move">
                                 <DragHandle sx={{ cursor: 'pointer' }} />
                             </Tooltip>
@@ -185,6 +185,7 @@ function Column({ column }) {
                                 type="text" variant="outlined"
                                 size="small"
                                 autoFocus
+                                data-no-dnd = "true"
                                 value={newCardTittle}
                                 onChange={(e) => setNewCardTittle(e.target.value)}
 
@@ -208,7 +209,7 @@ function Column({ column }) {
                                     alignItems: 'center',
                                     gap: 1,
                                 }}>
-                                <Button variant="contained" color="success" size="small" onClick={addNewCard} 
+                                <Button data-no-dnd = "true" variant="contained" color="success" size="small" onClick={addNewCard} 
                                 sx={{ 
                                     mr: 1,
                                     border : '0.5px solid transparent',
