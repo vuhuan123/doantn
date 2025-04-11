@@ -20,6 +20,7 @@ import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import TextField from '@mui/material/TextField';
 import CloseIcon from '@mui/icons-material/Close';
+import { toast } from "react-toastify";
 
 function Column({ column }) {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -37,7 +38,10 @@ function Column({ column }) {
         setOpenNewCardForm(!openNewCardForm)
     }
     const addNewCard = () => {
-        if (!newCardTittle) return
+        if (!newCardTittle){
+            toast.error('Please enter card name',{position: 'bottom-right'})
+            return
+        } 
         else {
             //goi API o day
         }
