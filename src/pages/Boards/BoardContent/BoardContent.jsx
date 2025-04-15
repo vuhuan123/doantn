@@ -22,7 +22,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
     COLUMN: 'ACTIVE_DRAG_ITEM_TYPE_COLLUM',
     CARD: 'ACTIVE_DRAG_ITEM_TYPE_CARD',
 }
-function BoardContent({ board, createNewColumn, createNewCard }) {
+function BoardContent({ board, createNewColumn, createNewCard, moveColumns }) {
     // yeeu cau duy chuyen 10px khi hold
     // const pointerSensor = useSensor(PointerSensor, {activationConstraint:{distance: 10}})
     // Yeu cau chuot di chuyen 10px thif ms kich hoat e, fix truowng hop click bi goi e
@@ -192,7 +192,11 @@ function BoardContent({ board, createNewColumn, createNewCard }) {
                 const oldColumnIndex = oderedColumnsState.findIndex(c => c._id === active.id)
                 // lấy vị trí mới từ thằng active từ event
                 const newColumnIndex = oderedColumnsState.findIndex(c => c._id === over.id)
-                setOderedColumnsState(arrayMove(oderedColumnsState, oldColumnIndex, newColumnIndex))
+                const dndOderedColumns = arrayMove(oderedColumnsState, oldColumnIndex, newColumnIndex)
+                //Goi API de cap nhat lai vi tri column trong DB
+                moveColumns(dndOderedColumns)
+
+                setOderedColumnsState(dndOderedColumns)
             }
         }
 
