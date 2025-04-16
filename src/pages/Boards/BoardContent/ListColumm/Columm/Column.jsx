@@ -15,7 +15,6 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { DragHandle } from "@mui/icons-material";
 import ListCards from "./ListCards/ListCards";
-import { mapOrder } from "~/utils/sort";
 import { useSortable } from '@dnd-kit/sortable';
 import { CSS } from '@dnd-kit/utilities';
 import TextField from '@mui/material/TextField';
@@ -62,7 +61,8 @@ function Column({ column, createNewCard }) {
         height: '100%',
         opacity: isDragging ? 0.5 : undefined
     };
-    const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, '_id')
+    //
+    const orderedCards = column.cards
     // console.log('oderedcard:', orderedCards);
     return (
         <div
