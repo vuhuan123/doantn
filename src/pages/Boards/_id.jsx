@@ -10,11 +10,13 @@ import { fecthBoardDetailsAPI,
     createNewCardAPI, 
     updateBoardDetailsAPI, 
     updateColumnDetailsAPI,
-    moveCardToDifferentColumnAPI
+    moveCardToDifferentColumnAPI,
+    deleteColumnDetailsAPI
 } from '~/apis/index.js'
 import { generatePlaceholderCard } from '~/utils/fomater.js'
 import { isEmpty } from 'lodash';
 import { mapOrder } from "~/utils/sort"
+import { toast } from 'react-toastify';
 function Board() {
     const [board, setBoard] = useState(null)
 
@@ -107,6 +109,19 @@ function Board() {
             nextCardOrderIds: dndOrderedColumns.find(column => column._id === nextColumnId).cardOrderIds,
         })
     }
+    // Xu ly xoa column va card
+    const deleteColumnDetail = async (columnId) => {
+        //Update lai state Board
+        const newBoard = { ...board }
+        newBoard.columns = newBoard.columns.filter(column => column._id !== columnId)
+        newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== columnId)
+        setBoard(newBoard)
+        //Goi API xoa column
+        deleteColumnDetailsAPI(columnId)
+        .then(res => toast.success(res?.deleteColumn))
+        
+    }
+
     if(!board){
         return <Box>Loading...</Box>
     }
@@ -120,6 +135,7 @@ function Board() {
                 moveColumns={moveColumns} 
                 moveCardInTheSameColumn={moveCardInTheSameColumn} 
                 moveCardToDifferentColumn={moveCardToDifferentColumn}
+                deleteColumnDetail={deleteColumnDetail}
             />
         </ Container>
     )
