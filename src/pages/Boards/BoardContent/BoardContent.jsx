@@ -22,7 +22,7 @@ const ACTIVE_DRAG_ITEM_TYPE = {
     CARD: 'ACTIVE_DRAG_ITEM_TYPE_CARD',
 }
 
-function BoardContent({ board, createNewColumn, createNewCard, moveColumns, moveCardInTheSameColumn, moveCardToDifferentColumn }) {
+function BoardContent({ board, createNewColumn, createNewCard, moveColumns, moveCardInTheSameColumn, moveCardToDifferentColumn, deleteColumnDetail }) {
     // yeeu cau duy chuyen 10px khi hold
     // const pointerSensor = useSensor(PointerSensor, {activationConstraint:{distance: 10}})
     // Yeu cau chuot di chuyen 10px thif ms kich hoat e, fix truowng hop click bi goi e
@@ -251,7 +251,7 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
                 display: 'flex',
                 height: (theme) => theme.trello.BoardContentHeight,
             }}>
-                <ListColumms columns={oderedColumnsState} createNewColumn = {createNewColumn} createNewCard={createNewCard} />
+                <ListColumms columns={oderedColumnsState} createNewColumn = {createNewColumn} createNewCard={createNewCard} deleteColumnDetail={deleteColumnDetail} />
                 <DragOverlay dropAnimation={dropAnimation}>
                     {(!activeDragItemType && null)}
                     {(activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) && <Column column={activeDragItemData} />}
