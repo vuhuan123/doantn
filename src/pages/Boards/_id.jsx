@@ -17,7 +17,7 @@ import { isEmpty } from 'lodash';
 import { mapOrder } from "~/utils/sort"
 function Board() {
     const [board, setBoard] = useState(null)
-    console.log(board);
+
 
     useEffect(() => {
         const boardId = '67f533a965e8e24d5a2c1373'
@@ -83,10 +83,10 @@ function Board() {
     }
 
     const moveCardToDifferentColumn = async (currentCardId, prevColumnId, nextColumnId, dndOrderedColumns) => {
-        console.log('currentCardId', currentCardId);
-        console.log('prevColumnId', prevColumnId);  
-        console.log('nextColumnId', nextColumnId);
-        console.log('dndOderedColumns', dndOrderedColumns);
+        // console.log('currentCardId', currentCardId);
+        // console.log('prevColumnId', prevColumnId);  
+        // console.log('nextColumnId', nextColumnId);
+        // console.log('dndOderedColumns', dndOrderedColumns);
         //update cho chuaanr du lieu state Board
         const dndOderedColumnsIds = dndOrderedColumns.map(column => column._id)
         const newBoard = { ...board }
@@ -94,10 +94,15 @@ function Board() {
         newBoard.columnOrderIds = dndOderedColumnsIds
         setBoard(newBoard)
         // goi API xu ly Backend
+        let prevCardOrderIds = dndOrderedColumns.find(column => column._id === prevColumnId).cardOrderIds 
+        // xu ly truong hop chuyen card sang column khac ma column khong co card nao
+        if(prevCardOrderIds[0].includes('placeholder-card')){
+            prevCardOrderIds= []
+        }
         moveCardToDifferentColumnAPI({
             currentCardId, 
             prevColumnId,
-            prevCardOrderIds: dndOrderedColumns.find(column => column._id === prevColumnId).cardOrderIds,
+            prevCardOrderIds,
             nextColumnId,
             nextCardOrderIds: dndOrderedColumns.find(column => column._id === nextColumnId).cardOrderIds,
         })
