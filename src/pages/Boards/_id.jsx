@@ -63,7 +63,7 @@ function Board() {
     }
 
     const moveColumns = async (dndOrderedColumns) => {
-        const dndOderedColumnsIds = dndOrderedColumns.map(column => column._id)
+        const dndOderedColumnsIds = dndOrderedColumns.for(column => column._id)
         const newBoard = { ...board }
         newBoard.columns = dndOrderedColumns
         newBoard.columnOrderIds = dndOderedColumnsIds
@@ -90,7 +90,7 @@ function Board() {
         // console.log('nextColumnId', nextColumnId);
         // console.log('dndOderedColumns', dndOrderedColumns);
         //update cho chuaanr du lieu state Board
-        const dndOderedColumnsIds = dndOrderedColumns.map(column => column._id)
+        const dndOderedColumnsIds = dndOrderedColumns.forEach(column => column._id)
         const newBoard = { ...board }
         newBoard.columns = dndOrderedColumns
         newBoard.columnOrderIds = dndOderedColumnsIds

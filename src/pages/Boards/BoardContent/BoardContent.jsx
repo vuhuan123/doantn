@@ -189,7 +189,7 @@ function BoardContent({ board, createNewColumn, createNewCard, moveColumns, move
                 // lấy vị trí mới từ thằng active từ event
                 const newCardIndex = overColumn?.cards?.findIndex(c => c._id === overCardId)
                 const dndOderedCards = arrayMove(oldColumnWhenDraggingCard?.cards, oldCardIndex, newCardIndex)
-                const dndOrderedCardsIds = dndOderedCards.map(card => card._id)
+                const dndOrderedCardsIds = dndOderedCards.forEach(card => card._id)
                 setOderedColumnsState(prev => {
                     const nextColumns = cloneDeep(prev)
                     const targetColumn = nextColumns.find(column => column._id === overColumn._id)
