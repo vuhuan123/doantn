@@ -48,7 +48,7 @@ export const activeBoardSlice = createSlice({
 export const { updateCurrentActiveBoard } = activeBoardSlice.actions
 //selectors: La noi danh cho cac component ben duoi goi de lay du lieu tu redux store
 export const selectCurrentActiveBoard = (state) => {
- return state.activeBoard.currentActiveBoard
+ return state.active.currentActiveBoard
 }
 // export default activeBoardSlice.reducer
 export const activeBoardReducer = activeBoardSlice.reducer
