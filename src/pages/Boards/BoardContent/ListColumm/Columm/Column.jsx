@@ -21,8 +21,15 @@ import TextField from '@mui/material/TextField';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from "react-toastify";
 import { useConfirm } from "material-ui-confirm";
+import {createNewCardAPI,} from '~/apis/index.js'
+import { cloneDeep } from 'lodash';
+import { useSelector, useDispatch } from "react-redux";
+import { updateCurrentActiveBoard, selectCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
+import { deleteColumnDetailsAPI} from '~/apis/index.js'
 
-function Column({ column, createNewCard, deleteColumnDetail }) {
+function Column({ column }) {
+    const board = useSelector(selectCurrentActiveBoard)
+    const dispatch = useDispatch()
     const [anchorEl, setAnchorEl] = useState(null);
     const [openNewCardForm, setOpenNewCardForm] = useState(false)
     const [newCardTittle, setNewCardTittle] = useState('')
@@ -37,16 +44,25 @@ function Column({ column, createNewCard, deleteColumnDetail }) {
     const toggleNewCardForm = () => {
         setOpenNewCardForm(!openNewCardForm)
     }
-    const addNewCard = async() => {
-        if (!newCardTittle){
-            toast.error('Please enter card name',{position: 'bottom-right'})
+    const addNewCard = async () => {
+        if (!newCardTittle) {
+            toast.error('Please enter card name', { position: 'bottom-right' })
             return
-        } 
+        }
         const newCardData = {
             title: newCardTittle,
             columnId: column._id,
         }
-       await createNewCard(newCardData)
+          const createdCard = await createNewCardAPI({ ...newCardData, boardId: board._id })
+        
+                const newBoard = cloneDeep(board)
+                const columnToUpdate = newBoard.columns.find(column => column._id === createdCard.columnId)
+                if (columnToUpdate) {
+                    columnToUpdate.cards.push(createdCard)
+                    columnToUpdate.cardOrderIds.push(createdCard._id)
+                }
+                // setBoard(newBoard)
+                dispatch(updateCurrentActiveBoard(newBoard))
         toggleNewCardForm()
         setNewCardTittle('')
     }
@@ -64,17 +80,24 @@ function Column({ column, createNewCard, deleteColumnDetail }) {
     };
     const confirm = useConfirm();
 
-    const handleDeleteColumm = async() => {
+    const handleDeleteColumm = async () => {
         const { confirmed } = await confirm({
             title: 'Delete column?',
             description: 'Are you sure?',
             cancellationText: 'Cancel',
             confirmationText: 'Confirm',
             buttonOrder: ['confirm', 'cancel'],
-          });
-          if (confirmed) {
-           deleteColumnDetail(column._id);
-          }
+        });
+        if (confirmed) {
+            const newBoard = { ...board }
+            newBoard.columns = newBoard.columns.filter(c => c._id !== column._id)
+            newBoard.columnOrderIds = newBoard.columnOrderIds.filter(_id => _id !== column._id)
+            // setBoard(newBoard)
+            dispatch(updateCurrentActiveBoard(newBoard))
+            //Goi API xoa column
+            deleteColumnDetailsAPI(column._id)
+                .then(res => toast.success(res?.deleteResult))
+        }
 
     }
 
@@ -136,12 +159,12 @@ function Column({ column, createNewCard, deleteColumnDetail }) {
                             anchorEl={anchorEl}
                             open={open}
                             onClose={handleClose}
-                           onClick={handleClose}
+                            onClick={handleClose}
                             MenuListProps={{
                                 'aria-labelledby': 'basic-button-dropdown"',
                             }}
                         >
-                            <MenuItem  onClick={toggleNewCardForm}>
+                            <MenuItem onClick={toggleNewCardForm}>
                                 <ListItemIcon>
                                     <AddCardIcon fontSize="small" />
                                 </ListItemIcon>
@@ -166,14 +189,16 @@ function Column({ column, createNewCard, deleteColumnDetail }) {
                                 <ListItemText>Paste</ListItemText>
                             </MenuItem>
                             <Divider />
-                            <MenuItem 
-                            onClick={handleDeleteColumm}
-                            sx={{ '&:hover' :
-                                { color: 'warning.dark',
-                                    '& .delete-column': {
+                            <MenuItem
+                                onClick={handleDeleteColumm}
+                                sx={{
+                                    '&:hover':
+                                    {
                                         color: 'warning.dark',
-                                    },
-                                 }
+                                        '& .delete-column': {
+                                            color: 'warning.dark',
+                                        },
+                                    }
                                 }}>
                                 <ListItemIcon><DeleteForeverIcon fontSize="small" /></ListItemIcon>
                                 <ListItemText className="delete-column">Delete columm</ListItemText>
@@ -186,7 +211,7 @@ function Column({ column, createNewCard, deleteColumnDetail }) {
                     </Box>
                 </Box>
                 {/* Box list card */}
-                <ListCards cards={orderedCards} createNewCard={createNewCard} />
+                <ListCards cards={orderedCards} />
 
 
                 {/* Box columm footer */}
@@ -205,7 +230,7 @@ function Column({ column, createNewCard, deleteColumnDetail }) {
                             alignItems: 'center',
                             justifyContent: 'space-between',
                         }}>
-                            <Button startIcon={<AddCardIcon />}   onClick={toggleNewCardForm}> Add new card</Button>
+                            <Button startIcon={<AddCardIcon />} onClick={toggleNewCardForm}> Add new card</Button>
                             <Tooltip title="Drag to move">
                                 <DragHandle sx={{ cursor: 'pointer' }} />
                             </Tooltip>
@@ -219,7 +244,7 @@ function Column({ column, createNewCard, deleteColumnDetail }) {
                                 type="text" variant="outlined"
                                 size="small"
                                 autoFocus
-                                data-no-dnd = "true"
+                                data-no-dnd="true"
                                 value={newCardTittle}
                                 onChange={(e) => setNewCardTittle(e.target.value)}
 
@@ -243,16 +268,16 @@ function Column({ column, createNewCard, deleteColumnDetail }) {
                                     alignItems: 'center',
                                     gap: 1,
                                 }}>
-                                <Button data-no-dnd = "true" variant="contained" color="success" size="small" onClick={addNewCard} 
-                                sx={{ 
-                                    mr: 1,
-                                    border : '0.5px solid transparent',
-                                    borderColor: (theme) => theme.palette.main,
-                                    '&:hover': {
-                                        bgcolor: (theme) => theme.palette.main,
-                                    },
-                                    ml: 1,
-                                 }}>Add</Button>
+                                <Button data-no-dnd="true" variant="contained" color="success" size="small" onClick={addNewCard}
+                                    sx={{
+                                        mr: 1,
+                                        border: '0.5px solid transparent',
+                                        borderColor: (theme) => theme.palette.main,
+                                        '&:hover': {
+                                            bgcolor: (theme) => theme.palette.main,
+                                        },
+                                        ml: 1,
+                                    }}>Add</Button>
                                 <CloseIcon
                                     sx={{
                                         color: (theme) => theme.palette.warning.light,

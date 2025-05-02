@@ -6,22 +6,37 @@ import { useState } from "react";
 import TextField from '@mui/material/TextField';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from "react-toastify";
+import {createNewColumnAPI} from '~/apis/index.js'
+import { cloneDeep } from 'lodash';
+import { generatePlaceholderCard } from '~/utils/fomater.js'
+import { useSelector, useDispatch } from "react-redux";
+import { updateCurrentActiveBoard, selectCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
 
-function ListColumms({ columns, createNewColumn, createNewCard, deleteColumnDetail }) {
+function ListColumms({ columns }) {
+    const board = useSelector(selectCurrentActiveBoard)
+    const dispatch = useDispatch()
     const [openNewColumnForm, setOpenNewColumnForm] = useState(false)
     const [newColumnTittle, setNewColumnTittle] = useState('')
     const toggleNewColumnForm = () => {
         setOpenNewColumnForm(!openNewColumnForm)
     }
-    const addNewColumn = async() => {
-        if (!newColumnTittle){
-            toast.error('Please enter column name',{position: 'bottom-left'})
+    const addNewColumn = async () => {
+        if (!newColumnTittle) {
+            toast.error('Please enter column name', { position: 'bottom-left' })
             return
         }
         const newColumnData = {
             title: newColumnTittle,
         }
-       await createNewColumn(newColumnData)
+        const createdColumn = await createNewColumnAPI({ ...newColumnData, boardId: board._id })
+
+        const newBoard = cloneDeep(board)
+        createdColumn.cards = [generatePlaceholderCard(createdColumn)]
+        createdColumn.cardOrderIds = [generatePlaceholderCard(createdColumn)._id]
+
+        newBoard.columns.push(createdColumn)
+        newBoard.columnOrderIds.push(createdColumn._id)
+        dispatch(updateCurrentActiveBoard(newBoard))
         toggleNewColumnForm()
         setNewColumnTittle('')
     }
@@ -39,7 +54,7 @@ function ListColumms({ columns, createNewColumn, createNewCard, deleteColumnDeta
             }}>
 
                 {/* Box Columm */}
-                {columns?.map((column) => <Column key={column._id} column={column} createNewCard={createNewCard} deleteColumnDetail={deleteColumnDetail}/>)}
+                {columns?.map((column) => <Column key={column._id} column={column} />)}
                 {!openNewColumnForm ?
                     <Box onClick={toggleNewColumnForm} sx={{
                         minWidth: '250px',
