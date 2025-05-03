@@ -15,14 +15,18 @@ import { cloneDeep } from 'lodash';
 
 import { fetchBoardDetailAPI, updateCurrentActiveBoard, selectCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
+
 function Board() {
     // const [board, setBoard] = useState(null)
     const dispatch = useDispatch()
     const board = useSelector(selectCurrentActiveBoard)
+    const { boardId } = useParams()
     useEffect(() => {
-        const boardId = '67f533a965e8e24d5a2c1373'
+        // const boardId = '67f533a965e8e24d5a2c1373'
         dispatch(fetchBoardDetailAPI(boardId))
-    }, [dispatch])
+    }, [dispatch, boardId])
   
 
     const moveColumns = async (dndOrderedColumns) => {
