@@ -99,6 +99,7 @@ function LoginForm() {
               color="primary"
               size="large"
               fullWidth
+              className="interceptor-loading" 
             >
               Login
             </Button>

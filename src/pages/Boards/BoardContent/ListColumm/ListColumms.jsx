@@ -111,7 +111,7 @@ function ListColumms({ columns }) {
                                 justifyContent: 'space-between',
                                 alignItems: 'center',
                             }}>
-                            <Button variant="contained" color="success" onClick={addNewColumn} sx={{ mr: 1 }}>Add Column</Button>
+                            <Button className="interceptor-loading" variant="contained" color="success" onClick={addNewColumn} sx={{ mr: 1 }}>Add Column</Button>
                             <CloseIcon
 
                                 sx={{
