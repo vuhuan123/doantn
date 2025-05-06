@@ -3,7 +3,7 @@ import { Box, Container } from '@mui/material';
 import AppBar from '~/components/AppBar/AppBar';
 import BoardBar from './BoardBar/BoardBar';
 import BoardContent from './BoardContent/BoardContent';
-// import { mockData } from '~/apis/mock-data';
+import PageLoadingSpiner from '../../components/Loading/pageLoadingSpiner';
 import { useEffect } from 'react';
 import {
     updateBoardDetailsAPI,
@@ -12,7 +12,6 @@ import {
 } from '~/apis/index.js'
 import { cloneDeep } from 'lodash';
 // import { mapOrder } from "~/utils/sort"
-
 import { fetchBoardDetailAPI, updateCurrentActiveBoard, selectCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
@@ -83,7 +82,8 @@ function Board() {
     // Xu ly xoa column va card
 
     if (!board) {
-        return <Box>Loading...</Box>
+       return  <PageLoadingSpiner text="Loading Board"/>
+    // return <div>loading</div>
     }
     return (
         <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
