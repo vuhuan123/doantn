@@ -9,24 +9,32 @@ import { ConfirmProvider } from "material-ui-confirm";
 import 'react-toastify/dist/ReactToastify.css';
 import store from './redux/store.jsx';
 import { Provider } from 'react-redux'
+
 // cau hinh react-router-dom
 import { BrowserRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react'
+import { persistStore } from 'redux-persist'
+
+const persistor = persistStore(store)
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
       <Provider store={store}>
-        <CssVarsProvider theme={theme}>
-          <ConfirmProvider defaultOptions={{
-            allowClose: false,
-            dialogProps: { maxWidth: 'xs' },
-            confirmationButtonProps: { color: 'error' },
-            cancellationButtonProps: { color: 'primary' },
-          }}>
-            <CssBaseline />
-            <App />
-            <ToastContainer />
-          </ConfirmProvider>
-        </CssVarsProvider>
+        <PersistGate persistor={persistor}>
+          <CssVarsProvider theme={theme}>
+            <ConfirmProvider defaultOptions={{
+              allowClose: false,
+              dialogProps: { maxWidth: 'xs' },
+              confirmationButtonProps: { color: 'error' },
+              cancellationButtonProps: { color: 'primary' },
+            }}>
+              <CssBaseline />
+              <App />
+              <ToastContainer />
+            </ConfirmProvider>
+          </CssVarsProvider>
+        </PersistGate>
       </Provider>
     </BrowserRouter>
   </StrictMode>,
