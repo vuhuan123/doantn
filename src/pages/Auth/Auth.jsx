@@ -1,15 +1,21 @@
-// TrungQuanDev: https://youtube.com/@trungquandev
-import { useLocation } from 'react-router-dom'
+
+import { Navigate, useLocation } from 'react-router-dom'
 import Box from '@mui/material/Box'
 import LoginForm from './LoginForm'
 import RegisterForm from './RegisterForm'
-
+import { useSelector } from 'react-redux'
+import { selectCurrentUser } from '../../redux/user/userSlice'
 function Auth() {
   const location = useLocation()
   // console.log(location)
   const isLogin = location.pathname === '/login'
   const isRegister = location.pathname === '/register'
 
+  // Xu ly redirect neu da dang nhap roi thi
+  const currentUser = useSelector(selectCurrentUser)
+  if (currentUser) {
+    return <Navigate to='/' replace={true}/>
+  }
   return (
     <Box sx={{
       display: 'flex',
