@@ -1,5 +1,6 @@
 import { StrictMode } from 'react'
 import CssBaseline from '@mui/material/CssBaseline';
+import { GlobalStyles } from '@mui/material';
 import { createRoot } from 'react-dom/client'
 import App from './App.jsx'
 import theme from './theme';
@@ -30,6 +31,7 @@ createRoot(document.getElementById('root')).render(
               confirmationButtonProps: { color: 'error' },
               cancellationButtonProps: { color: 'primary' },
             }}>
+              <GlobalStyles styles= {{a : { textDecoration : 'none'}}} />
               <CssBaseline />
               <App />
               <ToastContainer />
