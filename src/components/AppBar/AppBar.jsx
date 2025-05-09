@@ -19,6 +19,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { useState } from "react";
 import { InputAdornment } from "@mui/material";
+import { Link } from "react-router-dom";
 
 function AppBar() {
   const [searchValue, setSearchValue] = useState('')
@@ -39,6 +40,7 @@ function AppBar() {
       bgcolor: (theme) => theme.palette.mode === 'dark' ? '#2c3e50' : '#1565c0',
       '&::-webkit-scrollbar-track': { m: 1 }
     }}>
+      <Link to='/'>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
         <AppsIcon sx={{ color: 'white', marginLeft: '12px' }} />
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
@@ -64,6 +66,8 @@ function AppBar() {
           </Box>
         </Box>
       </Box>
+      
+      </Link>
       {/* p2 */}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, marginRight: '12px' }}>
         <TextField
