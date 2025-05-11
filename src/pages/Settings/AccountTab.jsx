@@ -82,6 +82,19 @@ function AccountTab() {
     }
 
     // Gọi API...
+    toast.promise(
+      dispatch(updateUserAPI(reqData)),
+      {
+        pending: 'Updating...',
+      },
+    ).then((res) => {
+      // Doan nay kiem tra khong co loi thi ms thuc hien hd can thiet
+      if (!res.error) {
+        toast.success('Update successfully!')
+      }
+      // Luu y , di co loi hoac thanhf cong thi deu phai clear input file
+      e.target.value = ''
+    })
   }
 
   return (
@@ -104,7 +117,7 @@ function AccountTab() {
           <Box>
             <Avatar
               sx={{ width: 84, height: 84, mb: 1 }}
-              alt="TrungQuanDev"
+              alt="Phamvu03"
               src={currentUser?.avatar}
             />
             <Tooltip title="Upload a new image to update your avatar immediately.">
