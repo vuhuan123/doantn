@@ -40,9 +40,13 @@ function AppBar() {
       bgcolor: (theme) => theme.palette.mode === 'dark' ? '#2c3e50' : '#1565c0',
       '&::-webkit-scrollbar-track': { m: 1 }
     }}>
-      <Link to='/'>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-        <AppsIcon sx={{ color: 'white', marginLeft: '12px' }} />
+        <Link to="/boards">
+        <Tooltip title="Board list">
+        <AppsIcon sx={{ color: 'white', marginLeft: '12px', verticalAlign : 'middle' }} />
+        </Tooltip>
+        </Link>
+      <Link to='/'>
         <Box sx={{ display: 'flex', alignItems: 'center', gap: 0.5 }}>
           <SvgIcon
             component={trelloIcon}
@@ -65,9 +69,9 @@ function AppBar() {
               startIcon={<AddIcon />}>Create</Button>
           </Box>
         </Box>
+      </Link>
       </Box>
       
-      </Link>
       {/* p2 */}
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2, marginRight: '12px' }}>
         <TextField
