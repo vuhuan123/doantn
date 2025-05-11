@@ -22,7 +22,7 @@ export const createNewCardAPI = async( dataCard )=>{
 }
 
 export const updateBoardDetailsAPI = async( boardId, updateData )=>{
-    const res = await authorizedAxiosInstance.put(`${API_ROOT}/v1/board/${boardId}`, updateData)
+    const res = await authorizedAxiosInstance.put(`${API_ROOT}/v1/boards/${boardId}`, updateData)
 
     return res.data
 }
@@ -40,7 +40,7 @@ export const deleteColumnDetailsAPI = async( columnId )=>{
 }
 
 export const moveCardToDifferentColumnAPI = async( updateData )=>{
-    const res = await authorizedAxiosInstance.put(`${API_ROOT}/v1/board/supports/moving_card`, updateData)
+    const res = await authorizedAxiosInstance.put(`${API_ROOT}/v1/boards/supports/moving_card`, updateData)
 
     return res.data
 }
@@ -60,4 +60,9 @@ export const verifyUserAPI = async( data )=>{
 export const refreshTokenAPI = async()=>{
     const res = await authorizedAxiosInstance.get(`${API_ROOT}/v1/users/refreshToken`)
     return res.data
+}
+
+export const fetchBoardsAPI = async (searchPath) =>{
+    const res = await authorizedAxiosInstance.get(`${API_ROOT}/v1/boards${searchPath}`)
+    return res
 }

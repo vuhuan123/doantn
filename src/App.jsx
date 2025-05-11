@@ -20,7 +20,7 @@ function App() {
   return (
     <Routes>
       {/* Redirect Route */}
-      <Route path='/' element={<Navigate to='boards/67f533a965e8e24d5a2c1373' replace={true} />}  />
+      <Route path='/' element={<Navigate to='/boards' replace={true}/> }  />
 
     {/* Chi khi dang nhap ms xu ly dc trong nay */}
     <Route element={<ProtectedRoute user={currentUser} />}>
