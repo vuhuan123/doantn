@@ -21,12 +21,11 @@ import TextField from '@mui/material/TextField';
 import CloseIcon from '@mui/icons-material/Close';
 import { toast } from "react-toastify";
 import { useConfirm } from "material-ui-confirm";
-import {createNewCardAPI,} from '~/apis/index.js'
+import { createNewCardAPI, deleteColumnDetailsAPI, updateColumnDetailsAPI } from '../../../../../apis/index'
 import { cloneDeep } from 'lodash';
 import { useSelector, useDispatch } from "react-redux";
 import { updateCurrentActiveBoard, selectCurrentActiveBoard } from '~/redux/activeBoard/activeBoardSlice'
-import { deleteColumnDetailsAPI} from '~/apis/index.js'
-
+import ToggleFocusInput from '../../../../../components/Form/ToggleFocusInput'
 function Column({ column }) {
     const board = useSelector(selectCurrentActiveBoard)
     const dispatch = useDispatch()
@@ -53,16 +52,16 @@ function Column({ column }) {
             title: newCardTittle,
             columnId: column._id,
         }
-          const createdCard = await createNewCardAPI({ ...newCardData, boardId: board._id })
-        
-                const newBoard = cloneDeep(board)
-                const columnToUpdate = newBoard.columns.find(column => column._id === createdCard.columnId)
-                if (columnToUpdate) {
-                    columnToUpdate.cards.push(createdCard)
-                    columnToUpdate.cardOrderIds.push(createdCard._id)
-                }
-                // setBoard(newBoard)
-                dispatch(updateCurrentActiveBoard(newBoard))
+        const createdCard = await createNewCardAPI({ ...newCardData, boardId: board._id })
+
+        const newBoard = cloneDeep(board)
+        const columnToUpdate = newBoard.columns.find(column => column._id === createdCard.columnId)
+        if (columnToUpdate) {
+            columnToUpdate.cards.push(createdCard)
+            columnToUpdate.cardOrderIds.push(createdCard._id)
+        }
+        // setBoard(newBoard)
+        dispatch(updateCurrentActiveBoard(newBoard))
         toggleNewCardForm()
         setNewCardTittle('')
     }
@@ -101,7 +100,17 @@ function Column({ column }) {
 
     }
 
+    const onUpdateColumnTitle = (newTitle) => {
+        updateColumnDetailsAPI(column._id, { title: newTitle }).then(() => {
+            const newBoard = cloneDeep(board)
+            const columnToUpdate = newBoard.columns.find(c => c._id === column._id)
+            if (columnToUpdate) {
+                columnToUpdate.title = newTitle
+            }
+            dispatch(updateCurrentActiveBoard(newBoard))
+        })
 
+    }
 
     //
     const orderedCards = column.cards
@@ -132,16 +141,11 @@ function Column({ column }) {
                     alignItems: 'center',
                     justifyContent: 'space-between',
                 }}>
-                    <Typography
-                        variant="h6"
-                        sx={{
-                            fontSize: '1rem',
-                            fontWeight: 'bold',
-                            cursor: 'pointer',
-                        }}
-                    >
-                        {column.title}
-                    </Typography>
+                    <ToggleFocusInput
+                        value={column.title}
+                        onChangedValue={onUpdateColumnTitle}
+                        data-no-dnd="true"
+                    />
                     {/* drop down */}
                     <Box>
                         <Tooltip title="More options">
@@ -268,7 +272,7 @@ function Column({ column }) {
                                     alignItems: 'center',
                                     gap: 1,
                                 }}>
-                                <Button className="interceptor-loading"  data-no-dnd="true" variant="contained" color="success" size="small" onClick={addNewCard}
+                                <Button className="interceptor-loading" data-no-dnd="true" variant="contained" color="success" size="small" onClick={addNewCard}
                                     sx={{
                                         mr: 1,
                                         border: '0.5px solid transparent',
