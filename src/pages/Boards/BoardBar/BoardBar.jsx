@@ -10,7 +10,7 @@ import AvatarGroup from '@mui/material/AvatarGroup';
 import Tolltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import { capitallizeFirstLetter } from '~/utils/fomater'
-
+import BoardUserGroup from './BoardUserGroup'
 
 import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 const MERN_STYLES = {
@@ -77,37 +77,7 @@ function BoardBar({ board }) {
                 >
                     Invite
                 </Button>
-                <AvatarGroup
-                    max={4}
-                    sx={{
-                        gap: '5px',
-                        cursor: 'pointer',
-                        '& .MuiAvatar-root': {
-                            width: 30,
-                            height: 30,
-                            fontSize: 16,
-                            border: 'none',
-                            color: 'white',
-                            '&:fist-of-type': { bgcolor: '#a4b0be' },
-                        }
-                    }}
-                >
-                    <Tolltip title="Pham Vu 001" >
-                        <Avatar alt="Pham Vu 003" src="https://yt3.ggpht.com/ytc/AIdro_nD1ahyug_Kad8D7hSWEsXnc-avy7exMe-Dampww9N_SCuZ_sO-UdbFttBsvdxNXLLbkg=s88-c-k-c0x00ffffff-no-rj" />
-                    </Tolltip>
-                    <Tolltip title="Pham Vu 002" >
-                        <Avatar alt="Bham Vu 003" src="/static/images/avatar/1.jpg" />
-                    </Tolltip>
-                    <Tolltip title="Pham Vu 003" >
-                        <Avatar alt="Cham Vu 003" src="/static/images/avatar/1.jpg" />
-                    </Tolltip>
-                    <Tolltip title="Pham Vu 004" >
-                        <Avatar alt="Dham Vu 003" src="/static/images/avatar/1.jpg" />
-                    </Tolltip>
-                    <Tolltip title="Pham Vu 004" >
-                        <Avatar alt="Dham Vu 003" src="/static/images/avatar/1.jpg" />
-                    </Tolltip>
-                </AvatarGroup>
+                <BoardUserGroup />
             </Box>
         </Box>
     )
