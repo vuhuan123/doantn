@@ -5,8 +5,6 @@ import VpnLockIcon from '@mui/icons-material/VpnLock';
 import AddToDriveIcon from '@mui/icons-material/AddToDrive';
 import BoltIcon from '@mui/icons-material/Bolt';
 import FilterListIcon from '@mui/icons-material/FilterList';
-import Avatar from '@mui/material/Avatar';
-import AvatarGroup from '@mui/material/AvatarGroup';
 import Tolltip from '@mui/material/Tooltip';
 import Button from '@mui/material/Button';
 import { capitallizeFirstLetter } from '~/utils/fomater'
@@ -77,7 +75,7 @@ function BoardBar({ board }) {
                 >
                     Invite
                 </Button>
-                <BoardUserGroup />
+                <BoardUserGroup boardUsers={board?.FE_allUsers} />
             </Box>
         </Box>
     )

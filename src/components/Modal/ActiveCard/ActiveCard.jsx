@@ -35,6 +35,7 @@ import { clearCurrentActiveCard, selectCurrentActiveCard, updateCurrentActiveCar
 import { useDispatch, useSelector } from 'react-redux'
 import { styled } from '@mui/material/styles'
 import {updateCardDetailAPI} from '../../../apis/index'
+import {updateCardInBoard} from '../../../redux/activeBoard/activeBoardSlice'
 const SidebarItem = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -62,21 +63,26 @@ function ActiveCard() {
   // const [isOpen, setIsOpen] = useState(true)
   // const handleOpenModal = () => setIsOpen(true)
   const dispatch = useDispatch()
-    const activeCard = useSelector(selectCurrentActiveCard)
-
+  const activeCard = useSelector(selectCurrentActiveCard)
+    
   const handleCloseModal = () => {
     // setIsOpen(false)
     dispatch(clearCurrentActiveCard())
   }
   const callApiUpdateCard = async(updateData) => {
-    //b1
     const updatedCard = await updateCardDetailAPI(activeCard._id, updateData)
-    //b2
+    //B1: Cap nhat lai card dang active trong modal hien tai
     dispatch(updateCurrentActiveCard(updatedCard))
+    //B2 Cap nhat lai card trong activeBoard
+    dispatch(updateCardInBoard(updatedCard))
+
     return updatedCard
   }
   const onUpdateCardTitle = (newTitle) => {
-    callApiUpdateCard({ title : newTitle.trim() })
+    callApiUpdateCard({title : newTitle.trim() })
+  }
+  const onUpdateCardDescription = (newDescripton) => {
+    callApiUpdateCard({description : newDescripton })
   }
 
   const onUploadCardCover = (event) => {
@@ -90,8 +96,12 @@ function ActiveCard() {
     reqData.append('cardCover', event.target?.files[0])
 
     // Gọi API...
+    toast.promise(
+      callApiUpdateCard(reqData).finally(()=> event.target.value = ''),
+      {pending : 'Updating ...'}
+    )
   }
-
+  
   return (
     <Modal
       disableScrollLock
@@ -156,7 +166,7 @@ function ActiveCard() {
               </Box>
 
               {/* Feature 03: Xử lý mô tả của Card */}
-              <CardDescriptionMdEditor />
+              <CardDescriptionMdEditor  cardDescriptionProp = {activeCard.description} handleUpdateCardDescription = {onUpdateCardDescription} />
             </Box>
 
             <Box sx={{ mb: 3 }}>
