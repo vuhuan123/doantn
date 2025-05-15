@@ -3,6 +3,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   currentActiveCard: null,
+  isShowModalActiveCard : false
 }
 
 
@@ -10,9 +11,15 @@ const initialState = {
 export const activeCardSlice = createSlice({
   name: 'activeCard',
   initialState,
+
   reducers: {
-    clearCurrentActiveCard: (state) => {
+    showModalActiveCard : (state) =>{
+     state.isShowModalActiveCard = true
+    },
+
+    clearAndHideCurrentActiveCard: (state) => {
       state.currentActiveCard = null
+       state.isShowModalActiveCard = false
     },
     updateCurrentActiveCard : (state, action) => {
         const fullCard = action.payload
@@ -23,10 +30,13 @@ export const activeCardSlice = createSlice({
 })
 
 // Action la noi danh cho cac component ben duoi goi bang dispatch() toi no de cap nhat lai du lieu thong qua reducer 
-export const { clearCurrentActiveCard, updateCurrentActiveCard } = activeCardSlice.actions
+export const { clearAndHideCurrentActiveCard, updateCurrentActiveCard, showModalActiveCard } = activeCardSlice.actions
 //selectors: La noi danh cho cac component ben duoi goi de lay du lieu tu redux store
 export const selectCurrentActiveCard = (state) => {
  return state.activeCard.currentActiveCard
+}
+export const selectIsShowModalActiveCard = (state) => {
+ return state.activeCard.isShowModalActiveCard
 }
 // export default activeBoardSlice.reducer
 export const activeCardReducer = activeCardSlice.reducer

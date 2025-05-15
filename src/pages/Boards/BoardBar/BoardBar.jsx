@@ -6,11 +6,10 @@ import AddToDriveIcon from '@mui/icons-material/AddToDrive';
 import BoltIcon from '@mui/icons-material/Bolt';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import Tolltip from '@mui/material/Tooltip';
-import Button from '@mui/material/Button';
 import { capitallizeFirstLetter } from '~/utils/fomater'
 import BoardUserGroup from './BoardUserGroup'
+import InviteBoardUser from './InviteBoardUser'
 
-import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 const MERN_STYLES = {
     color: 'white',
     backgroundColor: 'transparent',
@@ -64,17 +63,7 @@ function BoardBar({ board }) {
 
 
             <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
-                <Button variant="outlined" startIcon={<PersonAddAltIcon />}
-                    sx={{
-                        color: 'white',
-                        borderColor: 'white',
-                        '&:hover': {
-                            borderColor: 'white',
-                        }
-                    }}
-                >
-                    Invite
-                </Button>
+                <InviteBoardUser boardId = {board._id} />
                 <BoardUserGroup boardUsers={board?.FE_allUsers} />
             </Box>
         </Box>

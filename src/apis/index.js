@@ -77,3 +77,9 @@ export const updateCardDetailAPI = async (cardId, updateData) => {
     const res = await authorizedAxiosInstance.put(`${API_ROOT}/v1/cards/${cardId}`, updateData)
     return res.data
 }
+
+export const inviteUsertoBoardAPI = async (data) =>{
+    const res = await authorizedAxiosInstance.post(`${API_ROOT}/v1/invitations/board`, data)
+    toast.success('User invited')
+    return res.data
+}
