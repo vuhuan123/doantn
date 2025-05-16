@@ -8,7 +8,7 @@ import { Experimental_CssVarsProvider as CssVarsProvider } from '@mui/material/s
 import { ToastContainer } from 'react-toastify';
 import { ConfirmProvider } from "material-ui-confirm";
 import 'react-toastify/dist/ReactToastify.css';
-import store from './redux/store.jsx';
+import store from './redux/store.js';
 import { Provider } from 'react-redux'
 
 // cau hinh react-router-dom

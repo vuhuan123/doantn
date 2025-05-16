@@ -9,8 +9,6 @@ import Starred from "./Menu/Starred";
 import Templates from "./Menu/Templates";
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import Badge from '@mui/material/Badge';
 import Tooltip from '@mui/material/Tooltip';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import Profile from "./Menu/Profile";
@@ -20,7 +18,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { useState } from "react";
 import { InputAdornment } from "@mui/material";
 import { Link } from "react-router-dom";
-
+import Notifications from './Notifications/Notifications'
 function AppBar() {
   const [searchValue, setSearchValue] = useState('')
 
@@ -111,11 +109,7 @@ function AppBar() {
             },
           }}
         />
-        <Tooltip title="Notifications">
-          <Badge color="warning" variant="dot" >
-            <NotificationsNoneIcon sx={{ color: 'white' }} />
-          </Badge>
-        </Tooltip>
+        <Notifications />
         <Tooltip title="Help">
           <HelpOutlineIcon sx={{ color: 'white' }} />
         </Tooltip>
