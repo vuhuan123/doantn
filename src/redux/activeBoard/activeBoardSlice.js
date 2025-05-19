@@ -30,7 +30,7 @@ export const activeBoardSlice = createSlice({
       // update Nested data
       //https://redux.js.org/usage/structuring-reducers/immutable-update-patterns
       const incomingCard = action.payload
-      console.log('incomingCard',incomingCard);
+      // console.log('incomingCard',incomingCard);
       
       const column =  state.currentActiveBoard.columns.find(i => i._id === incomingCard.columnId)
       if(column){

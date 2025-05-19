@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form'
 import { EMAIL_RULE, FIELD_REQUIRED_MESSAGE, EMAIL_RULE_MESSAGE } from '~/utils/validators'
 import FieldErrorAlert from '~/components/Form/FieldErrorAlert'
 import {inviteUsertoBoardAPI} from '../../../apis/index'
-import { socketIoInstance } from '../../../main'
+import { socketIoInstance } from '../../../socketClient'
 function InviteBoardUser({boardId}) {
   /**
    * Xử lý Popover để ẩn hoặc hiện một popup nhỏ, tương tự docs để tham khảo ở đây:

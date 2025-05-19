@@ -36,6 +36,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { styled } from '@mui/material/styles'
 import {updateCardDetailAPI} from '../../../apis/index'
 import {updateCardInBoard} from '../../../redux/activeBoard/activeBoardSlice'
+import { selectCurrentUser } from '../../../redux/user/userSlice'
+
 const SidebarItem = styled(Box)(({ theme }) => ({
   display: 'flex',
   alignItems: 'center',
@@ -65,7 +67,7 @@ function ActiveCard() {
   const dispatch = useDispatch()
   const activeCard = useSelector(selectCurrentActiveCard)
   const isShowModalActiveCard = useSelector(selectIsShowModalActiveCard)
-    
+  const currentUser = useSelector(selectCurrentUser)
   const handleCloseModal = () => {
     // setIsOpen(false)
     dispatch(clearAndHideCurrentActiveCard())
@@ -107,7 +109,9 @@ function ActiveCard() {
    await callApiUpdateCard({commentToAdd})
     
   }
-  
+  const onUpdateCardMember = (incomingMemberInfor) => {
+    callApiUpdateCard({incomingMemberInfor})
+  }
   return (
     <Modal
       disableScrollLock
@@ -162,7 +166,7 @@ function ActiveCard() {
               <Typography sx={{ fontWeight: '600', color: 'primary.main', mb: 1 }}>Members</Typography>
 
               {/* Feature 02: Xử lý các thành viên của Card */}
-              <CardUserGroup />
+              <CardUserGroup cardMemberIds = {activeCard?.memberIds} onUpdateCardMember = {onUpdateCardMember}/>
             </Box>
 
             <Box sx={{ mb: 3 }}>
@@ -191,10 +195,18 @@ function ActiveCard() {
             <Typography sx={{ fontWeight: '600', color: 'primary.main', mb: 1 }}>Add To Card</Typography>
             <Stack direction="column" spacing={1}>
               {/* Feature 05: Xử lý hành động bản thân user tự join vào card */}
-              <SidebarItem className="active">
+              {!activeCard?.memberIds?.includes(currentUser._id)  &&
+              <SidebarItem className="active" 
+              onClick={onUpdateCardMember({
+                      userId : currentUser._id,
+                       action: 'ADD'
+              })}
+              >
                 <PersonOutlineOutlinedIcon fontSize="small" />
                 Join
               </SidebarItem>
+              
+              }
               {/* Feature 06: Xử lý hành động cập nhật ảnh Cover của Card */}
               <SidebarItem className="active" component="label">
                 <ImageOutlinedIcon fontSize="small" />
