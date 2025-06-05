@@ -57,7 +57,8 @@ function SidebarCreateBoardModal({ afterCreateNewBoard }) {
 
 
   const submitCreateNewBoard = (data) => {
-    // const { title, description, type } = data
+    // const { title, description,deadline , type } = data
+    
     createNewBoardAPI(data).then(()=>{
       handleCloseModal()
       afterCreateNewBoard()
@@ -131,6 +132,29 @@ function SidebarCreateBoardModal({ afterCreateNewBoard }) {
                     error={!!errors['title']}
                   />
                   <FieldErrorAlert errors={errors} fieldName={'title'} />
+                </Box>
+                   <Box>
+                  <TextField
+                    fullWidth
+                    label="Deadline"
+                    type="text"
+                    variant="outlined"
+                    multiline
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <DescriptionOutlinedIcon fontSize="small" />
+                        </InputAdornment>
+                      )
+                    }}
+                    {...register('deadline', {
+                      required: FIELD_REQUIRED_MESSAGE,
+                      minLength: { value: 3, message: 'Min Length is 3 characters' },
+                      maxLength: { value: 255, message: 'Max Length is 255 characters' }
+                    })}
+                    error={!!errors['deadline']}
+                  />
+                  <FieldErrorAlert errors={errors} fieldName={'deadline'} />
                 </Box>
 
                 <Box>

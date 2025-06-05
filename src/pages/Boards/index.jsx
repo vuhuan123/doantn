@@ -14,15 +14,18 @@ import HomeIcon from '@mui/icons-material/Home'
 import ArrowRightIcon from '@mui/icons-material/ArrowRight'
 import Card from '@mui/material/Card'
 import CardContent from '@mui/material/CardContent'
-import CardMedia from '@mui/material/CardMedia'
 import Pagination from '@mui/material/Pagination'
 import PaginationItem from '@mui/material/PaginationItem'
 import { Link, useLocation } from 'react-router-dom'
-import randomColor from 'randomcolor'
 import SidebarCreateBoardModal from './create'
-import { fetchBoardsAPI } from '../../apis'
+import { fetchBoardsAPI, updateBoardDetailsAPI } from '../../apis'
 import { styled } from '@mui/material/styles'
 import { DEFAULT_ITEMS_PER_PAGE, DEFAULT_PAGE } from '../../utils/constant'
+import { cloneDeep } from 'lodash'
+import TextFiledDeadline from '../../components/Form/TextFiledDeadline'
+import { useSelector } from 'react-redux'
+import { selectCurrentActiveBoard, updateCurrentActiveBoard } from '../../redux/activeBoard/activeBoardSlice'
+import { useDispatch } from 'react-redux'
 // Styles của mấy cái Sidebar item menu, anh gom lại ra đây cho gọn.
 const SidebarItem = styled(Box)(({ theme }) => ({
   display: 'flex',
@@ -46,7 +49,10 @@ function Boards() {
   const [boards, setBoards] = useState(null)
   // Tổng toàn bộ số lượng bản ghi boards có trong Database mà phía BE trả về để FE dùng tính toán phân trang
   const [totalBoards, setTotalBoards] = useState(null)
-
+  // const [deadlines, setDeadlines] = useState({})
+  // console.log('deadlines', deadlines);
+  const dispatch = useDispatch()
+  const board = useSelector(selectCurrentActiveBoard)
   // Xử lý phân trang từ url với MUI: https://mui.com/material-ui/react-pagination/#router-integration
   const location = useLocation()
   /**
@@ -59,9 +65,9 @@ function Boards() {
    * Nhắc lại kiến thức cơ bản hàm parseInt cần tham số thứ 2 là Hệ thập phân (hệ đếm cơ số 10) để đảm bảo chuẩn số cho phân trang
    */
   const page = parseInt(query.get('page') || '1', 10)
-  const updateStateData = (res)=>{
-      setBoards(res.data.boards || [])
-      setTotalBoards(res.data.totalBoard || 0)
+  const updateStateData = (res) => {
+    setBoards(res.data.boards || [])
+    setTotalBoards(res.data.totalBoard || 0)
   }
   useEffect(() => {
     // // Fake tạm 16 cái item thay cho boards
@@ -70,14 +76,31 @@ function Boards() {
     // // Fake tạm giả sử trong Database trả về có tổng 100 bản ghi boards
     // setTotalBoards(100)
     // Gọi API lấy danh sách boards ở đây...
-     fetchBoardsAPI(location.search).then(updateStateData)
+    fetchBoardsAPI(location.search).then(updateStateData)
   }, [location.search])
-  const afterCreateNewBoard = () =>{
+  const afterCreateNewBoard = () => {
     fetchBoardsAPI(location.search).then(updateStateData)
   }
   // Lúc chưa tồn tại boards > đang chờ gọi api thì hiện loading
   if (!boards) {
     return <PageLoadingSpiner text="Loading Boards..." />
+  }
+  const handleUpdateNewDeadLine = (newDeadline, boardId) => {
+    updateBoardDetailsAPI(boardId, { deadline: newDeadline }).then(() => {
+      // Cập nhật deadline trong danh sách boards (cập nhật state)
+      const updatedBoards = cloneDeep(boards)
+      const boardToUpdate = updatedBoards.find(b => b._id === boardId)
+      if (boardToUpdate) {
+        boardToUpdate.deadline = newDeadline
+      }
+      setBoards(updatedBoards)
+
+      // Nếu cần cập nhật Redux state (chỉ nếu board này là board đang active)
+      if (board?._id === boardId) {
+        const updatedBoard = { ...board, deadline: newDeadline }
+        dispatch(updateCurrentActiveBoard(updatedBoard))
+      }
+    })
   }
 
   return (
@@ -122,11 +145,58 @@ function Boards() {
                     <Card sx={{ width: '250px' }}>
                       {/* Ý tưởng mở rộng về sau làm ảnh Cover cho board nhé */}
                       {/* <CardMedia component="img" height="100" image="https://picsum.photos/100" /> */}
-                      <Box sx={{ height: '50px', backgroundColor: randomColor() }}></Box>
+                      {/* DeadLine */}
+                      <Box sx={{
+                        height: '140px',
+                       backgroundColor: () => {
+                       const deadlineDate = new Date(b.deadline)
+                        const now = new Date()
+                        // Bỏ giờ đi, chỉ lấy ngày tháng năm để so sánh
+                        deadlineDate.setHours(0, 0, 0, 0)
+                        now.setHours(0, 0, 0, 0)
+                        const diffInDays = (deadlineDate - now) / (1000 * 60 * 60 * 24)
+                        if (diffInDays <= 1) return '#f44336' // đỏ
+                        return '#C8E6C9' // xanh nhat
+                      },
+                        transition: 'background-color 0.3s ease-in-out',
+                        padding: '10px'
+                      }}>
+                        <Box sx={{ margin: '0 10px 10px 10px', fontWeight: 'bold' }}>Deadline </Box>
+                        <TextFiledDeadline
+                          value={b.deadline}
+                          onChangedValue={(newDeadline) => handleUpdateNewDeadLine(newDeadline, b._id)}
+                          data-no-dnd="true"
+                        />
+                        {/* <TextField
+                          type="text" 
+                          size="small"
+                          autoFocus
+                          data-no-dnd="true"
+                          multiline
+                          border = 'none'
+                          rows={4}
+                        //  value={b?.deadline} // lấy deadline theo board id
+                        //   onChange={(e) => handleUpdateNewDeadLine(e, b._id)}
 
+                          sx={{
+                            width: '100%',
+                            '& label': { color: 'text.primary' },
+                            '& input': {
+                              color: (theme) => theme.palette.main,
+                              bgcolor: (theme) => theme.palette.mode === 'dark' ? '#333643' : 'white',
+                            },
+                            '& label.Mui-focused': { color: (theme) => theme.palette.main },
+                            '& .MuiOutlinedInput-root': {
+                              '& fieldset': { borderColor: (theme) => theme.palette.main },
+                              '&:hover fieldset': { borderColor: (theme) => theme.palette.main },
+                              '&.Mui-focused fieldset': { borderColor: (theme) => theme.palette.main },
+                            },
+                          }}
+                        /> */}
+                      </Box>
                       <CardContent sx={{ p: 1.5, '&:last-child': { p: 1.5 } }}>
                         <Typography gutterBottom variant="h6" component="div">
-                          {b.title}
+                          {b?.title}
                         </Typography>
                         <Typography
                           variant="body2"
