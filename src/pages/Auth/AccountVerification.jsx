@@ -1,6 +1,6 @@
 import { Navigate, useSearchParams } from 'react-router-dom'
 import {useState, useEffect} from 'react'
-import PageLoadingSpiner from '../../components/Loading/pageLoadingSpiner'
+// import PageLoadingSpiner from '../../components/Loading/pageLoadingSpiner'
 import { verifyUserAPI } from '../../apis'
 function AccountVerification() {
     // lay gia tri tu url
@@ -22,7 +22,8 @@ function AccountVerification() {
         return <Navigate to="/404" />
     }
     if (!verified) {
-        return <PageLoadingSpiner text="verifying your account..."/>
+        return <h1>Loading....</h1>
+        // return <PageLoadingSpiner text="verifying your account..."/>
     }
   return <Navigate to={`/login?verifiedEmail=${email}`}/>;
 }
