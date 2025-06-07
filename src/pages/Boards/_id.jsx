@@ -4,7 +4,7 @@ import AppBar from '~/components/AppBar/AppBar';
 import BoardBar from './BoardBar/BoardBar';
 import BoardContent from './BoardContent/BoardContent';
 // import PageLoadingSpiner from '../../components/Loading/pageLoadingSpiner'
-import PageLoadingSpinner from '../../components/Loading/pageLoadingSpiner'
+// import PageLoadingSpinner from '../../components/Loading/pageLoadingSpiner'
 
 import { useEffect } from 'react';
 import {
@@ -83,8 +83,8 @@ function Board() {
     // Xu ly xoa column va card
 
     if (!board) {
-       return  <PageLoadingSpinner text="Loading Board"/> 
-    // return <div>loading</div>
+    //    return  <PageLoadingSpinner text="Loading Board"/> 
+    return <div>loading</div>
     }
     return (
         <Container disableGutters maxWidth={false} sx={{ height: '100vh' }}>
