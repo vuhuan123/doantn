@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import AppBar from '~/components/AppBar/AppBar'
-import PageLoadingSpinner from '~/components/Loading/PageLoadingSpinner'
+// import PageLoadingSpinner from '~/components/Loading/PageLoadingSpinner'
 import Container from '@mui/material/Container'
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
@@ -83,7 +83,8 @@ function Boards() {
   }
   // Lúc chưa tồn tại boards > đang chờ gọi api thì hiện loading
   if (!boards) {
-    return <PageLoadingSpinner text="Loading Boards..." />
+    // return <PageLoadingSpinner text="Loading Boards..." />
+    return <h1>Loading...</h1>
   }
   const handleUpdateNewDeadLine = (newDeadline, boardId) => {
     updateBoardDetailsAPI(boardId, { deadline: newDeadline }).then(() => {
